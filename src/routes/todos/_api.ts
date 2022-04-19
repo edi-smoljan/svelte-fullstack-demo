@@ -21,7 +21,10 @@ export const api = (request: Request, params?: Record<string, string>, todo?: Pa
             break;
         case "PATCH":
             const found = todos.find(todo => todo.uid === params.uid);
-            found.text = todo.text;
+            if (todo.text)
+                found.text = todo.text;
+            if (todo.done !== undefined)
+                found.done = todo.done;
             status = 200;
             break;
         default:

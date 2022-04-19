@@ -13,8 +13,9 @@ export const del:RequestHandler = ({params, request}) => {
 
 export const patch:RequestHandler = async ({params, request}) => {
     const form = await request.formData();
-    const text = form.get("text").toString();
-    const resp = api(request, params, {text});
+    const text = form.get("text")?.toString();
+    const done = form.has("done") ? !!form.get("done").toString() : undefined;
+    const resp = api(request, params, {text, done});
     return {
         status: resp.status,
         headers: {
