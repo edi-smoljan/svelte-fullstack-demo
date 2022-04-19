@@ -11,7 +11,7 @@ const config = {
 		adapter: adapter(),
 		methodOverride: {
 			parameter: '_method',
-			allowed: ['DELETE']
+			allowed: ['DELETE', 'PATCH']
 		} 
 	},
 };
