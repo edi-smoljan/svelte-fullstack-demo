@@ -54,6 +54,7 @@
         outline: none;
     }
 </style>
+
 <svelte:head>
     <title>{title}</title>
 </svelte:head>

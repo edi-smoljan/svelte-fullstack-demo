@@ -8,8 +8,12 @@ const config = {
 	preprocess: preprocess(),
 
 	kit: {
-		adapter: adapter()
-	}
+		adapter: adapter(),
+		methodOverride: {
+			parameter: '_method',
+			allowed: ['DELETE']
+		} 
+	},
 };
 
 export default config;
