@@ -19,6 +19,7 @@ export const post: RequestHandler = async ({request, params}) => {
         status: res.status,
         headers: {
             location: '/'
-        }
+        },
+        body: res.body
     };
 }
