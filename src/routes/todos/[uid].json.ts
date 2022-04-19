@@ -18,6 +18,7 @@ export const patch:RequestHandler = async ({params, request}) => {
     const resp = api(request, params, {text, done});
     return {
         status: resp.status,
+        body: resp.body,
         headers: {
             location: "/"
         }

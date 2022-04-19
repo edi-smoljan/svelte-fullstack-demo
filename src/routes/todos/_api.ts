@@ -13,7 +13,7 @@ export const api = (request: Request, params?: Record<string, string>, todo?: Pa
         case "POST":
             todos.push(<Todo>todo);
             status = 201;
-            body = todo;
+            body = <Todo>todo;
             break;
         case "DELETE":
             todos = todos.filter(todo => todo.uid !== params.uid);
@@ -26,12 +26,13 @@ export const api = (request: Request, params?: Record<string, string>, todo?: Pa
             if (todo.done !== undefined)
                 found.done = todo.done;
             status = 200;
+            body = found;
             break;
         default:
             break;
     }
 
-    if (Math.floor(status/100) === 2 && request.method !== "GET")
+    if (Math.floor(status/100) === 2 && request.method !== "GET" && request.headers.get("accept") !== "application/json")
         status = 303;
 
     return {
