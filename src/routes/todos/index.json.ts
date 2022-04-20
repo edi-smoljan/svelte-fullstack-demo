@@ -13,7 +13,7 @@ export const post: RequestHandler = async ({request, params}) => {
         done: false,
         text: value.toString()
     };
-    const res = api(request, undefined, todo);
+    const res = await api(request, undefined, todo);
     return {
         status: res.status,
         headers: {
