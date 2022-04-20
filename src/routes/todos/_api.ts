@@ -1,32 +1,44 @@
-import type {  } from "@sveltejs/kit";
+import PrismaClient from '$lib/prisma';
 
-let todos: Todo[] = [];
+const prisma = new PrismaClient();
 
-export const api = (request: Request, params?: Record<string, string>, todo?: Partial<Todo>) => {
+export const api = async (request: Request, params?: Record<string, string>, todo?: Partial<Todo>) => {
     let body = {};
     let status = 500;
     switch (request.method) {
         case "GET":
-            body = todos;
+            body = await prisma.todo.findMany();
             status = 200;
             break;
         case "POST":
-            todos.push(<Todo>todo);
+            body = await prisma.todo.create({
+                data: {
+                    created_at: todo.created_at,
+                    done: todo.done,
+                    text: todo.text
+                }
+            });
             status = 201;
-            body = <Todo>todo;
             break;
         case "DELETE":
-            todos = todos.filter(todo => todo.uid !== params.uid);
+            await prisma.todo.delete({
+                where: {
+                    uid: params.uid
+                }
+            });
             status = 200;
             break;
         case "PATCH":
-            const found = todos.find(todo => todo.uid === params.uid);
-            if (todo.text)
-                found.text = todo.text;
-            if (todo.done !== undefined)
-                found.done = todo.done;
+            body = await prisma.todo.update({
+                where: {
+                    uid: params.uid
+                },
+                data: {
+                    text: todo.text,
+                    done: todo.done
+                }
+            })
             status = 200;
-            body = found;
             break;
         default:
             break;
